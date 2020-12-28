@@ -6,22 +6,21 @@ import Person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      { name: "vatan", age: 20 },
-      { name: "tanuja", age: 15 },
-      { name: "sonali", age: 15 },
+      {id:"abcd1", name: "vatan", age: 20 },
+      {id:"abcd2", name: "tanuja", age: 15 },
+      {id:"abcd3", name: "sonali", age: 15 },
     ],
     showPersons: false,
   };
 
   //If we dont use function variable then in defination we will not be able to use 'this'
-  switchNamehandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 20 },
-        { name: "tanuja soni", age: 15 },
-        { name: "sonali", age: 15 },
-      ],
-    });
+  deletePersonHandler = (personIndex) => {
+    //Why it don't hit in debugging???
+    console.log(personIndex);
+    const persons = [...this.state.persons]; //Create shallow copy array (like value type)
+    //Or const persons = this.state.persons.slice(); //Create shallow copy (like value type)
+    persons.splice(personIndex, 1); //Remove 1 item starting from personIndex
+    this.setState({persons: persons});
   };
 
   nameChangedHandler = (event) => {
@@ -35,9 +34,7 @@ class App extends Component {
   };
 
   togglePersonHandler = () => {
-    {
-      this.setState({ showPersons: !this.state.showPersons });
-    }
+    this.setState({ showPersons: !this.state.showPersons });
   };
 
   render() {
@@ -53,31 +50,17 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={this.switchNamehandler.bind(this, "Vatan Soni")}
-            changed={this.nameChangedHandler}
-          >
-            Cricket, Badminton
-          </Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNamehandler.bind(this, "Tanuja Soni")}
-            changed={this.nameChangedHandler}
-          >
-            Chess
-          </Person>
-
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-            click={this.switchNamehandler.bind(this, "Sonali Soni")}
-            changed={this.nameChangedHandler}
-          >
-            Chess
-          </Person>
+          {this.state.persons.map((x, index) => {
+            return (
+              <Person
+                key={x.id}
+                name={x.name}
+                age={x.age}
+                click={() => this.deletePersonHandler(index)}
+                //above can be achieved also by:  click={this.deletePersonHandler.bind(this,index)}
+              />
+            );
+          })}
         </div>
       );
     }
@@ -91,12 +74,6 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button
-          style={style}
-          onClick={this.switchNamehandler.bind(this, "Button Soni")}
-        >
-          Click!!!
-        </button>
         <button style={style} onClick={this.togglePersonHandler}>
           Toggle Persons!!!
         </button>
