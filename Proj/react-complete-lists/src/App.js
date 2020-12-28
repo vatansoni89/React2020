@@ -6,9 +6,9 @@ import Person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      {id:"abcd1", name: "vatan", age: 20 },
-      {id:"abcd2", name: "tanuja", age: 15 },
-      {id:"abcd3", name: "sonali", age: 15 },
+      { id: "abcd1", name: "vatan", age: 20 },
+      { id: "abcd2", name: "tanuja", age: 15 },
+      { id: "abcd3", name: "sonali", age: 15 },
     ],
     showPersons: false,
   };
@@ -20,16 +20,17 @@ class App extends Component {
     const persons = [...this.state.persons]; //Create shallow copy array (like value type)
     //Or const persons = this.state.persons.slice(); //Create shallow copy (like value type)
     persons.splice(personIndex, 1); //Remove 1 item starting from personIndex
-    this.setState({persons: persons});
+    this.setState({ persons: persons });
   };
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event, id) => {
+    let persons = [...this.state.persons];
+    let index = persons.findIndex(x=>x.id === id);
+    let updatedPerson = persons.find(x=>x.id === id);
+    updatedPerson.name = event.target.value;
+    persons.splice(index, 1, updatedPerson)
     this.setState({
-      persons: [
-        { name: event.target.value, age: 20 },
-        { name: "tanuja soni", age: 15 },
-        { name: "sonali...", age: 15 },
-      ],
+      persons: persons,
     });
   };
 
@@ -58,6 +59,7 @@ class App extends Component {
                 age={x.age}
                 click={() => this.deletePersonHandler(index)}
                 //above can be achieved also by:  click={this.deletePersonHandler.bind(this,index)}
+                changed={(event) => this.nameChangedHandler(event, x.id)}
               />
             );
           })}
