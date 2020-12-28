@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Person from "./Person/Person";
-import Radium from "radium";
+import Radium, { StyleRoot } from "radium";
 
 class App extends Component {
   state = {
@@ -47,18 +47,18 @@ class App extends Component {
       border: "1px solid blue",
       padding: "8px",
       cursor: "pointer",
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color:'black'
-      }
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black",
+      },
     };
 
     let classes = [];
-    if (this.state.persons.length <=2) {
-      classes.push('red');
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
     }
-    if (this.state.persons.length <=1) {
-      classes.push('bold');
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
     }
 
     let persons = null;
@@ -81,27 +81,31 @@ class App extends Component {
       );
 
       style.backgroundColor = "red";
-      style[':hover'] = {
-        backgroundColor: 'lightred',
-        color:'blue'
-      }
+      style[":hover"] = {
+        backgroundColor: "lightred",
+        color: "blue",
+      };
     }
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button style={style} onClick={this.togglePersonHandler}>
-          Toggle Persons!!!
-        </button>
-        <p className={classes.join(' ')}>This is by adding css classes dynamically.</p>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to React</h1>
+          </header>
+          <p className="App-intro">
+            To get started, edit <code>src/App.js</code> and save to reload.
+          </p>
+          <button style={style} onClick={this.togglePersonHandler}>
+            Toggle Persons!!!
+          </button>
+          <p className={classes.join(" ")}>
+            This is by adding css classes dynamically.
+          </p>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
