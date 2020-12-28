@@ -25,10 +25,10 @@ class App extends Component {
 
   nameChangedHandler = (event, id) => {
     let persons = [...this.state.persons];
-    let index = persons.findIndex(x=>x.id === id);
-    let updatedPerson = persons.find(x=>x.id === id);
+    let index = persons.findIndex((x) => x.id === id);
+    let updatedPerson = persons.find((x) => x.id === id);
     updatedPerson.name = event.target.value;
-    persons.splice(index, 1, updatedPerson)
+    persons.splice(index, 1, updatedPerson);
     this.setState({
       persons: persons,
     });
@@ -40,12 +40,21 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
       cursor: "pointer",
     };
+    
+    let classes = [];
+    if (this.state.persons.length <=2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <=1) {
+      classes.push('bold');
+    }
 
     let persons = null;
     if (this.state.showPersons) {
@@ -65,6 +74,8 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = "red";
     }
 
     return (
@@ -79,7 +90,7 @@ class App extends Component {
         <button style={style} onClick={this.togglePersonHandler}>
           Toggle Persons!!!
         </button>
-
+        <p className={classes.join(' ')}>This is by adding css classes dynamically.</p>
         {persons}
       </div>
     );
