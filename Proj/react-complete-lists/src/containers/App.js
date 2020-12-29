@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
 import "./App.css";
-import Person from "../components/Persons/Person/Person";
+import Persons from "../components/Persons/Persons";
 
 class App extends Component {
   state = {
@@ -47,31 +47,24 @@ class App extends Component {
       padding: "8px",
       cursor: "pointer",
     };
-    
+
     let classes = [];
-    if (this.state.persons.length <=2) {
-      classes.push('red');
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
     }
-    if (this.state.persons.length <=1) {
-      classes.push('bold');
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
     }
 
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((x, index) => {
-            return (
-              <Person
-                key={x.id}
-                name={x.name}
-                age={x.age}
-                click={() => this.deletePersonHandler(index)}
-                //above can be achieved also by:  click={this.deletePersonHandler.bind(this,index)}
-                changed={(event) => this.nameChangedHandler(event, x.id)}
-              />
-            );
-          })}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+          />
         </div>
       );
 
@@ -90,7 +83,9 @@ class App extends Component {
         <button style={style} onClick={this.togglePersonHandler}>
           Toggle Persons!!!
         </button>
-        <p className={classes.join(' ')}>This is by adding css classes dynamically.</p>
+        <p className={classes.join(" ")}>
+          This is by adding css classes dynamically.
+        </p>
         {persons}
       </div>
     );
