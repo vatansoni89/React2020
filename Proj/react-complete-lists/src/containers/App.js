@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "../logo.svg";
 import "./App.css";
 import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
   state = {
@@ -39,23 +40,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-    };
-
-    let classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push("red");
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push("bold");
-    }
-
     let persons = null;
     if (this.state.showPersons) {
       persons = (
@@ -67,25 +51,16 @@ class App extends Component {
           />
         </div>
       );
-
-      style.backgroundColor = "red";
     }
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button style={style} onClick={this.togglePersonHandler}>
-          Toggle Persons!!!
-        </button>
-        <p className={classes.join(" ")}>
-          This is by adding css classes dynamically.
-        </p>
+        <Cockpit
+          title={this.props.title}
+          persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          clicked={this.togglePersonHandler}
+        />
         {persons}
       </div>
     );
