@@ -5,6 +5,12 @@ import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    console.log("From [App.js] constructor.");
+  }
+
   state = {
     persons: [
       { id: "abcd1", name: "vatan", age: 20 },
@@ -13,6 +19,11 @@ class App extends Component {
     ],
     showPersons: false,
   };
+
+  static getDerivedStateFromProps(props, state){
+    console.log("From [App.js] getDerivedStateFromProps.", props);
+    return state;
+  }
 
   //If we dont use function variable then in defination we will not be able to use 'this'
   deletePersonHandler = (personIndex) => {
@@ -39,7 +50,12 @@ class App extends Component {
     this.setState({ showPersons: !this.state.showPersons });
   };
 
+  componentDidMount(){
+    console.log("From [App.js] componentDidMount.");
+  }
+
   render() {
+    
     let persons = null;
     if (this.state.showPersons) {
       persons = (
@@ -52,7 +68,7 @@ class App extends Component {
         </div>
       );
     }
-
+    console.log("From [App.js] render.");
     return (
       <div className="App">
         <Cockpit
