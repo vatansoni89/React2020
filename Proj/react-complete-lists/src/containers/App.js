@@ -20,6 +20,18 @@ class App extends Component {
     showPersons: false,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[LifeCycle-Update]-[App.js] shouldComponentUpdate.");
+    return true;
+  }
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log("[LifeCycle-Update]-[App.js] getSnapshotBeforeUpdate.");
+    return null;
+  }
+  componentDidUpdate(){
+    console.log("[LifeCycle-Update]-[App.js] componentDidUpdate.");
+  }
+
   static getDerivedStateFromProps(props, state){
     console.log("From [App.js] getDerivedStateFromProps.", props);
     return state;
